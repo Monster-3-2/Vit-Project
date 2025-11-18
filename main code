@@ -1,0 +1,79 @@
+#PROJECT BY SANKIL SUDRIK [25BAI10311]
+#Personalized Budget Manager
+#Problem : Many people struggle with managing their expenses and savings effectively.
+#Solution : Build a budget management tool that allows users to track their expenses, set saving goals, and receive personalized insights on spending habits. It could send alerts if they’re overspending or offer tips to save more.
+#Purpose: Helps people achieve financial discipline and avoid overspending.
+exp=[]
+inc=[]
+total=[]
+budget=5000
+def Expense():
+    #takes input of expenditures with ammount and date
+    a= int(input('Ammount      : '))
+    b= int(input('Day          : '))
+    c= int(input('Month Number : '))
+    d=int(input('Year         : '))
+    e=input('Note         : ')
+    exp.append([a,b,c,d,e])
+    print('✓Expense added')
+def Income():
+    #takes input of incomes with ammount and date
+    a= int(input('Ammount      : '))
+    b= int(input('Day          : '))
+    c= int(input('Month Number : '))
+    d=int(input('Year         : '))
+    e=input('Note         : ')
+    inc.append([a,b,c,d,e])
+    print('✓Income added')
+def Show_Exp():
+    #displays expenses
+    parameter=['Expense Ammount','Day    ','Month  ','Year   ']
+    for i in exp:
+        for j,k in zip(i,parameter):
+             print(f'{k} : {j}')
+    print('These are your expenses ⇧')
+def Show_Inc():
+    #displays incomes
+    parameter=['Income Ammount','Day    ','Month  ','Year   ']
+    for i in inc:
+        for j,k in zip(i,parameter):
+             print(f'{k} : {j}')
+    print('These are your incomes ⇧')
+def Check():
+    #gives a notification  about current status of expenses and budget
+    for i in range(len(exp)):
+            total.append(int(exp[i][0]))
+    if sum(total)>budget:
+         print('Out of budget!!!\nYou spent more than',sum(total))
+    else:
+         print('All Good,your total expenses are',sum(total))
+def Delete():
+    #allows user to delete wrong entries
+    exp.pop()
+while True:
+    #displays user interface with input options
+    print("\n" + "="*40)
+    print('\t||MONEY MANAGEMENT SOFTWARE||\n  ⇨ 1.Add Expense\n  ⇨ 2.Add Income\n  ⇨ 3.Delete Entry\n  ⇨ 4.Show Expense\n  ⇨ 5.Show Income\n  ⇨ 6.Set Budget\n  ⇨ 7.Expense check\n  ⇨ 8.Transactions\n  ⇨ 9.Exit')
+    print("="*40)
+    x=input('Enter your choice number : ')
+    if x=='1':
+        Expense() 
+    elif x=='2':
+        Income()         
+    elif x=='3':
+        Delete()
+    elif x=='4':
+        Show_Exp()
+    elif x=='5':
+        Show_Inc()
+    elif x=='6':
+        budget=int(input('Enter Monthly Budget'))
+    elif x=='7':    
+        Check()
+    elif x=='8':
+        Show_Exp()
+        Show_Inc()
+    elif x=='9':
+        break
+    else:
+        print('✗invalid input')
