@@ -1,0 +1,385 @@
+#MONEY MANAGEMENT APP
+#Problem : Many people struggle with managing their expenses and savings effectively.
+#Solution : Build a budget management tool that allows users to track their expenses, set saving goals, and receive personalized insights on spending habits. It could send alerts if they’re overspending or offer tips to save more.
+#Purpose: Helps people achieve financial discipline and avoid overspending.
+import tkinter as tk
+from tkinter import ttk, messagebox, simpledialog
+from datetime import datetime
+
+class BudgetManager:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Money Management Software")
+        self.root.geometry("800x600")
+        self.root.configure(bg="#000000")
+        
+        # Data storage
+        self.expenses = []
+        self.incomes = []
+        self.budget = 5000
+        
+        # Create main frame
+        self.create_widgets()
+        
+    def create_widgets(self):
+        # Title
+        title_frame = tk.Frame(self.root, bg="#f7d66b", pady=15)
+        title_frame.pack(fill=tk.X)
+        
+        title_label = tk.Label(
+            title_frame, 
+            text="💰 MONEY MANAGEMENT SOFTWARE 💰",
+            font=("Algerian", 18, "bold"),
+            bg="#000000",
+            fg="#ffffff"
+        )
+        title_label.pack()
+        
+        # Budget display
+        budget_frame = tk.Frame(self.root, bg="#393636", pady=10)
+        budget_frame.pack(fill=tk.X)
+        
+        self.budget_label = tk.Label(
+            budget_frame,
+            text=f" Current Budget: ₹{self.budget} ",
+            font=("Comic Sans MS", 14),
+            bg="#ffffff",
+            fg="#050506"
+        )
+        self.budget_label.pack()
+        
+        # Button frame
+        button_frame = tk.Frame(self.root, bg="#f7d66b", pady=20)
+        button_frame.pack()
+        
+        # Create buttons in a grid
+        buttons = [
+            ("Add Expense", self.add_expense, "#ff5858"),
+            ("Add Income", self.add_income, "#3fe76f"),
+            ("Delete Last Entry", self.delete_entry, "#68a3fa"),
+            ("Show Expenses", self.show_expenses, "#fc3030"),
+            ("Show Incomes", self.show_incomes, "#0be75b"),
+            ("Set Budget", self.set_budget, "#508ef2"),
+            ("Check Expenses", self.check_expenses, "#FD0505"),
+            ("Show All Transactions", self.show_transactions, "#03C04C"),
+            ("Exit", self.exit_app, "#406ef8")
+        ]
+        
+        row = 0
+        col = 0
+        for text, command, color in buttons:
+            btn = tk.Button(
+                button_frame,
+                text=text,
+                command=command,
+                font=("Arial", 11, "bold"),
+                bg=color,
+                fg="white",
+                width=20,
+                height=2,
+                relief=tk.RAISED,
+                cursor="hand2"
+            )
+            btn.grid(row=row, column=col, padx=10, pady=10)
+            col += 1
+            if col > 2:
+                col = 0
+                row += 1
+        
+        # Display frame
+        display_frame = tk.Frame(self.root, bg="#f0f0f0")
+        display_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=10)
+        
+        # Scrollbar and text widget
+        scrollbar = tk.Scrollbar(display_frame)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        
+        self.display_text = tk.Text(
+            display_frame,
+            font=("Courier", 10),
+            bg="white",
+            fg="#2c3e50",
+            yscrollcommand=scrollbar.set,
+            wrap=tk.WORD
+        )
+        self.display_text.pack(fill=tk.BOTH, expand=True)
+        scrollbar.config(command=self.display_text.yview)
+        
+    def add_expense(self):
+        dialog = EntryDialog(self.root, "Add Expense", "Expense")
+        if dialog.result:
+            amount, day, month, year, note = dialog.result
+            self.expenses.append([amount, day, month, year, note])
+            messagebox.showinfo("Success", "✓ Expense added successfully!")
+            self.display_message(f"✓ Expense of ₹{amount} added on {day}/{month}/{year}\nNote: {note}", "success")
+            
+    def add_income(self):
+        dialog = EntryDialog(self.root, "Add Income", "Income")
+        if dialog.result:
+            amount, day, month, year, note = dialog.result
+            self.incomes.append([amount, day, month, year, note])
+            messagebox.showinfo("Success", "✓ Income added successfully!")
+            self.display_message(f"✓ Income of ₹{amount} added on {day}/{month}/{year}\nNote: {note}", "success")
+            
+    def delete_entry(self):
+        if not self.expenses and not self.incomes:
+            messagebox.showwarning("Warning", "No entries to delete!")
+            return
+            
+        choice = messagebox.askyesno(
+            "Delete Entry",
+            "Delete last expense? (Yes = Expense, No = Income)"
+        )
+        
+        if choice:
+            if self.expenses:
+                deleted = self.expenses.pop()
+                messagebox.showinfo("Success", "✓ Last expense deleted!")
+                self.display_message(f"✓ Deleted expense: ₹{deleted[0]} on {deleted[1]}/{deleted[2]}/{deleted[3]}", "success")
+            else:
+                messagebox.showwarning("Warning", "No expenses to delete!")
+        else:
+            if self.incomes:
+                deleted = self.incomes.pop()
+                messagebox.showinfo("Success", "✓ Last income deleted!")
+                self.display_message(f"✓ Deleted income: ₹{deleted[0]} on {deleted[1]}/{deleted[2]}/{deleted[3]}", "success")
+            else:
+                messagebox.showwarning("Warning", "No incomes to delete!")
+                
+    def show_expenses(self):
+        self.display_text.delete(1.0, tk.END)
+        
+        if not self.expenses:
+            self.display_text.insert(tk.END, "No expenses recorded yet.\n")
+            return
+            
+        self.display_text.insert(tk.END, "=" * 60 + "\n")
+        self.display_text.insert(tk.END, "EXPENSES\n")
+        self.display_text.insert(tk.END, "=" * 60 + "\n\n")
+        
+        total = 0
+        for idx, exp in enumerate(self.expenses, 1):
+            amount, day, month, year, note = exp
+            total += amount
+            self.display_text.insert(tk.END, f"Entry #{idx}\n")
+            self.display_text.insert(tk.END, f"  Amount: ₹{amount}\n")
+            self.display_text.insert(tk.END, f"  Date: {day}/{month}/{year}\n")
+            self.display_text.insert(tk.END, f"  Note: {note}\n")
+            self.display_text.insert(tk.END, "-" * 60 + "\n\n")
+            
+        self.display_text.insert(tk.END, f"Total Expenses: ₹{total}\n")
+        self.display_text.insert(tk.END, "=" * 60 + "\n")
+        
+    def show_incomes(self):
+        self.display_text.delete(1.0, tk.END)
+        
+        if not self.incomes:
+            self.display_text.insert(tk.END, "No incomes recorded yet.\n")
+            return
+            
+        self.display_text.insert(tk.END, "=" * 60 + "\n")
+        self.display_text.insert(tk.END, "INCOMES\n")
+        self.display_text.insert(tk.END, "=" * 60 + "\n\n")
+        
+        total = 0
+        for idx, inc in enumerate(self.incomes, 1):
+            amount, day, month, year, note = inc
+            total += amount
+            self.display_text.insert(tk.END, f"Entry #{idx}\n")
+            self.display_text.insert(tk.END, f"  Amount: ₹{amount}\n")
+            self.display_text.insert(tk.END, f"  Date: {day}/{month}/{year}\n")
+            self.display_text.insert(tk.END, f"  Note: {note}\n")
+            self.display_text.insert(tk.END, "-" * 60 + "\n\n")
+            
+        self.display_text.insert(tk.END, f"Total Income: ₹{total}\n")
+        self.display_text.insert(tk.END, "=" * 60 + "\n")
+        
+    def set_budget(self):
+        budget = simpledialog.askinteger(
+            "Set Budget",
+            "Enter your monthly budget:",
+            minvalue=0
+        )
+        if budget is not None:
+            self.budget = budget
+            self.budget_label.config(text=f"Current Budget: ₹{self.budget}")
+            messagebox.showinfo("Success", f"✓ Budget set to ₹{budget}")
+            self.display_message(f"✓ Monthly budget updated to ₹{budget}", "success")
+            
+    def check_expenses(self):
+        total_expenses = sum(exp[0] for exp in self.expenses)
+        
+        self.display_text.delete(1.0, tk.END)
+        self.display_text.insert(tk.END, "=" * 60 + "\n")
+        self.display_text.insert(tk.END, "BUDGET CHECK\n")
+        self.display_text.insert(tk.END, "=" * 60 + "\n\n")
+        self.display_text.insert(tk.END, f"Budget: ₹{self.budget}\n")
+        self.display_text.insert(tk.END, f"Total Expenses: ₹{total_expenses}\n")
+        self.display_text.insert(tk.END, f"Remaining: ₹{self.budget - total_expenses}\n\n")
+        
+        if total_expenses > self.budget:
+            self.display_text.insert(tk.END, "⚠️ WARNING: Out of budget!\n")
+            self.display_text.insert(tk.END, f"You have overspent by ₹{total_expenses - self.budget}\n")
+            messagebox.showwarning("Budget Alert", f"You are over budget by ₹{total_expenses - self.budget}!")
+        else:
+            self.display_text.insert(tk.END, "✓ All Good! You're within budget.\n")
+            
+        self.display_text.insert(tk.END, "=" * 60 + "\n")
+        
+    def show_transactions(self):
+        self.display_text.delete(1.0, tk.END)
+        
+        self.display_text.insert(tk.END, "=" * 60 + "\n")
+        self.display_text.insert(tk.END, "ALL TRANSACTIONS\n")
+        self.display_text.insert(tk.END, "=" * 60 + "\n\n")
+        
+        # Show expenses
+        self.display_text.insert(tk.END, "EXPENSES:\n")
+        self.display_text.insert(tk.END, "-" * 60 + "\n")
+        if self.expenses:
+            for idx, exp in enumerate(self.expenses, 1):
+                amount, day, month, year, note = exp
+                self.display_text.insert(tk.END, f"{idx}. ₹{amount} on {day}/{month}/{year} - {note}\n")
+        else:
+            self.display_text.insert(tk.END, "No expenses\n")
+            
+        self.display_text.insert(tk.END, "\n")
+        
+        # Show incomes
+        self.display_text.insert(tk.END, "INCOMES:\n")
+        self.display_text.insert(tk.END, "-" * 60 + "\n")
+        if self.incomes:
+            for idx, inc in enumerate(self.incomes, 1):
+                amount, day, month, year, note = inc
+                self.display_text.insert(tk.END, f"{idx}. ₹{amount} on {day}/{month}/{year} - {note}\n")
+        else:
+            self.display_text.insert(tk.END, "No incomes\n")
+            
+        self.display_text.insert(tk.END, "\n" + "=" * 60 + "\n")
+        
+        total_income = sum(inc[0] for inc in self.incomes)
+        total_expense = sum(exp[0] for exp in self.expenses)
+        balance = total_income - total_expense
+        
+        self.display_text.insert(tk.END, f"Total Income: ₹{total_income}\n")
+        self.display_text.insert(tk.END, f"Total Expenses: ₹{total_expense}\n")
+        self.display_text.insert(tk.END, f"Net Balance: ₹{balance}\n")
+        self.display_text.insert(tk.END, "=" * 60 + "\n")
+        
+    def display_message(self, message, msg_type="info"):
+        self.display_text.delete(1.0, tk.END)
+        self.display_text.insert(tk.END, message)
+        
+    def exit_app(self):
+        if messagebox.askyesno("Exit", "Are you sure you want to exit?"):
+            self.root.destroy()
+
+
+class EntryDialog:
+    def __init__(self, parent, title, entry_type):
+        self.result = None
+        self.top = tk.Toplevel(parent)
+        self.top.title(title)
+        self.top.geometry("350x320")
+        self.top.configure(bg="#ecf0f1")
+        
+        # Center the dialog
+        self.top.transient(parent)
+        self.top.grab_set()
+        
+        # Create form
+        tk.Label(
+            self.top,
+            text=f"Add {entry_type}",
+            font=("Arial", 14, "bold"),
+            bg="#ecf0f1",
+            fg="#2c3e50"
+        ).pack(pady=10)
+        
+        # Amount
+        tk.Label(self.top, text="Amount:", bg="#ecf0f1").pack(anchor=tk.W, padx=20)
+        self.amount_entry = tk.Entry(self.top, width=30)
+        self.amount_entry.pack(padx=20, pady=5)
+        self.amount_entry.bind('<Return>', lambda e: self.day_entry.focus())
+        
+        # Day
+        tk.Label(self.top, text="Day (1-31):", bg="#ecf0f1").pack(anchor=tk.W, padx=20)
+        self.day_entry = tk.Entry(self.top, width=30)
+        self.day_entry.pack(padx=20, pady=5)
+        self.day_entry.bind('<Return>', lambda e: self.month_entry.focus())
+        
+        # Month
+        tk.Label(self.top, text="Month (1-12):", bg="#ecf0f1").pack(anchor=tk.W, padx=20)
+        self.month_entry = tk.Entry(self.top, width=30)
+        self.month_entry.pack(padx=20, pady=5)
+        self.month_entry.bind('<Return>', lambda e: self.year_entry.focus())
+        
+        # Year
+        tk.Label(self.top, text="Year:", bg="#ecf0f1").pack(anchor=tk.W, padx=20)
+        self.year_entry = tk.Entry(self.top, width=30)
+        self.year_entry.pack(padx=20, pady=5)
+        self.year_entry.bind('<Return>', lambda e: self.note_entry.focus())
+        
+        # Note
+        tk.Label(self.top, text="Note:", bg="#ecf0f1").pack(anchor=tk.W, padx=20)
+        self.note_entry = tk.Entry(self.top, width=30)
+        self.note_entry.pack(padx=20, pady=5)
+        self.note_entry.bind('<Return>', lambda e: self.submit())
+        
+        # Set focus to amount field
+        self.amount_entry.focus()
+        
+        # Buttons
+        btn_frame = tk.Frame(self.top, bg="#ecf0f1")
+        btn_frame.pack(pady=20)
+        
+        tk.Button(
+            btn_frame,
+            text="Submit",
+            command=self.submit,
+            bg="#27ae60",
+            fg="white",
+            font=("Arial", 10, "bold"),
+            width=10
+        ).pack(side=tk.LEFT, padx=5)
+        
+        tk.Button(
+            btn_frame,
+            text="Cancel",
+            command=self.cancel,
+            bg="#e74c3c",
+            fg="white",
+            font=("Arial", 10, "bold"),
+            width=10
+        ).pack(side=tk.LEFT, padx=5)
+        
+        # Wait for the window to close
+        parent.wait_window(self.top)
+        
+    def submit(self):
+        try:
+            amount = int(self.amount_entry.get())
+            day = int(self.day_entry.get())
+            month = int(self.month_entry.get())
+            year = int(self.year_entry.get())
+            note = self.note_entry.get()
+            
+            if not (1 <= day <= 31 and 1 <= month <= 12 and year > 0):
+                raise ValueError("Invalid date")
+                
+            if not note:
+                note = "No description"
+                
+            self.result = (amount, day, month, year, note)
+            self.top.destroy()
+        except ValueError:
+            messagebox.showerror("Error", "Please enter valid values!")
+            
+    def cancel(self):
+        self.top.destroy()
+
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = BudgetManager(root)
+    root.mainloop()
