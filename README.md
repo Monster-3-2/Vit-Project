@@ -49,7 +49,7 @@ All buttons arranged in grid layout, responsive scroll area, and separate dialog
 ```bash
 python budget_manager.py
 #main
-
+https://github.com/Monster-3-2/Vit-Project/blob/4f41bba417ae22a907971b5bc2d0feb50d7298ae/main%20ui.png
 #add expense
 
 #add income
