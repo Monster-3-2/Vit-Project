@@ -61,7 +61,7 @@ https://github.com/Monster-3-2/Vit-Project/blob/d0a7d64c35d4c93b8c074c47ff530667
 #set budget
 https://github.com/Monster-3-2/Vit-Project/blob/f348844b1f9447eae8a4141f6f35a18d83f9cfb0/set%20budget.png
 #check expenses
-
+https://github.com/Monster-3-2/Vit-Project/blob/cb697579aeae0afa9e27309f462c5a9a3debb60a/budget%20check.png
 #transactions
 
 #exit
