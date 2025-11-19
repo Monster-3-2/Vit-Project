@@ -1,0 +1,248 @@
+PROJECT REPORT
+
+Title: Money Management Software (Tkinter)
+
+
+---
+
+1. Introduction
+
+This project is a desktop-based money management system built using Python and Tkinter.
+The software helps users record daily expenses and incomes, set a monthly budget, view financial summaries, and monitor whether they are within their spending limits.
+
+It provides a clean graphical interface and simple workflows suitable for personal finance tracking.
+
+
+---
+
+2. Objectives
+
+The main objectives of the application are:
+
+To provide a simple GUI for recording expenses and incomes.
+
+To allow users to set and adjust their monthly budget.
+
+To summarize expenses, incomes, and remaining balance.
+
+To store and show transactions in an organized format.
+
+To notify the user when they exceed the budget.
+
+
+
+---
+
+3. Features
+
+3.1 Add Expense
+
+Users can record an expense by entering:
+
+Amount
+
+Date (Day, Month, Year)
+
+Note/description
+
+
+The valid entry gets added to the internal list.
+
+3.2 Add Income
+
+Similar to expenses, this records:
+
+Amount
+
+Date
+
+Note
+
+
+3.3 Delete Last Entry
+
+If user selects Yes, the last expense is deleted.
+
+If user selects No, the last income is deleted.
+
+
+3.4 Show Expenses
+
+Displays:
+
+All saved expenses
+
+Date, Amount, Note
+
+Total expenses at bottom
+
+
+3.5 Show Incomes
+
+Displays:
+
+All saved incomes
+
+Total income
+
+
+3.6 Set Budget
+
+Allows the user to change the monthly budget. The interface automatically updates the displayed budget.
+
+3.7 Check Expenses (Budget Check)
+
+Displays:
+
+Total expenses
+
+Remaining budget
+
+Warning message if the user overspends
+
+
+3.8 Show All Transactions
+
+Shows incomes and expenses together, along with:
+
+Total income
+
+Total expenses
+
+Net balance
+
+
+3.9 Exit Application
+
+Prompts for confirmation before closing the window.
+
+
+---
+
+4. System Requirements
+
+Software
+
+Python 3.10
+
+Tkinter (bundled with Python)
+
+
+Hardware
+
+Any modern system with basic processing power
+
+Minimum screen resolution 800×600
+
+
+
+---
+
+5. Technologies Used
+
+Component	Technology
+
+GUI	Tkinter
+Date Handling	datetime
+Dialogs	simpledialog, messagebox
+Data Storage	Python lists (in-memory)
+
+
+
+---
+
+6. Code Structure
+
+Classes
+
+1. BudgetManager
+
+Handles:
+
+GUI layout
+
+Storing expenses/incomes
+
+Displaying summaries
+
+Budget logic
+
+Main application control
+
+
+2. EntryDialog
+
+Handles:
+
+Expense/Income input form
+
+Validations
+
+Returning results to main class
+
+
+Main
+
+Creates the Tk root and runs the GUI loop.
+
+
+---
+
+7. Workflow Diagram
+
++-------------------+
+|   User Interface  |
++-------------------+
+         |
+         v
++---------------------+
+| Input Dialog (Add)  |
++---------------------+
+         |
+         v
++-------------------+
+| Store in Lists    |
+| expenses/incomes  |
++-------------------+
+         |
+         v
++--------------------+
+| Display / Summary  |
++--------------------+
+
+
+---
+
+8. Testing
+
+Test Cases Performed
+
+Test Case	Expected Result	Status
+
+Add valid expense	Added to list	Passed
+Add invalid date	Shows error	Passed
+Delete last entry	Removes last item	Passed
+Budget check	Shows remaining/alert	Passed
+Display screens	Show complete data	Passed
+Set budget	Updates budget label	Passed
+
+
+
+---
+
+9. Conclusion
+
+This project successfully implements a beginner-friendly money management tool.
+It demonstrates:
+
+GUI design
+
+Event-driven programming
+
+User input handling
+
+Data presentation
+
+
+The program can be further expanded using file storage, charts, or monthly reports.
+
