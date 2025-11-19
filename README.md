@@ -48,3 +48,40 @@ All buttons arranged in grid layout, responsive scroll area, and separate dialog
 
 ```bash
 python budget_manager.py
+#main
+<img width="1192" height="936" alt="image" src="https://github.com/user-attachments/assets/04191122-bd55-416d-946f-c1963736d419" />
+#add expense
+<img width="510" height="512" alt="image" src="https://github.com/user-attachments/assets/dd08952a-db18-4849-85a7-2fceeb436cc7" />
+#add income
+<img width="514" height="518" alt="image" src="https://github.com/user-attachments/assets/8be74021-65ab-4c80-891d-d53bd325bfc6" />
+#show expenses
+<img width="1123" height="547" alt="image" src="https://github.com/user-attachments/assets/c43d3ff5-e65e-479d-8003-5cdacea3ff80" />
+#show income
+<img width="1119" height="537" alt="image" src="https://github.com/user-attachments/assets/bdb880a3-288d-4f2a-982b-b1423a0ad773" />
+#set budget
+<img width="1129" height="233" alt="image" src="https://github.com/user-attachments/assets/34d9f4e4-5e2d-403c-92d4-b729a9f6f4ab" />
+#check expenses
+<img width="1198" height="803" alt="image" src="https://github.com/user-attachments/assets/c399cb0b-53b8-47ea-b6f2-9db0519aefb6" />
+#transactions
+<img width="1167" height="644" alt="image" src="https://github.com/user-attachments/assets/351ad738-c4fd-4752-ad8f-52447b2090a1" />
+#exit
+<img width="382" height="225" alt="image" src="https://github.com/user-attachments/assets/d53c58ee-d4f5-499e-9bb6-eb957511e8af" />
+
+
+▸ Future Improvements
+
+  Export data to CSV or Excel
+
+  Pie charts for category analysis
+
+  Auto-save to file
+
+  Search and filter functions
+
+
+
+---
+
+Author
+
+SANKIL SUDRIK
