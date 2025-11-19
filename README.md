@@ -55,7 +55,7 @@ https://github.com/Monster-3-2/Vit-Project/blob/ece8700a28b2c547ae8d8ee87d0bb0ef
 #add income
 https://github.com/Monster-3-2/Vit-Project/blob/046500f4588b3fb3fc7eca19fe83409a7834b81f/add%20income.png
 #show expenses
-
+https://github.com/Monster-3-2/Vit-Project/blob/acf75bc79fd87300f8c86c0d9ef5d51b5746cf8b/show%20expenses.png
 #show income
 
 #set budget
