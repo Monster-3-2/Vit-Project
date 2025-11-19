@@ -49,7 +49,7 @@ All buttons arranged in grid layout, responsive scroll area, and separate dialog
 ```bash
 python budget_manager.py
 #main
-<img width="1192" height="936" alt="image" src="https://github.com/user-attachments/assets/04191122-bd55-416d-946f-c1963736d419" />
+<img width="1192" height="936" alt="Screenshot 2025-11-19 222016" src="https://github.com/user-attachments/assets/7a266855-94c2-478e-ada3-93ab65c4bac0" />
 #add expense
 <img width="510" height="512" alt="image" src="https://github.com/user-attachments/assets/dd08952a-db18-4849-85a7-2fceeb436cc7" />
 #add income
