@@ -51,7 +51,7 @@ python budget_manager.py
 #main
 https://github.com/Monster-3-2/Vit-Project/blob/4f41bba417ae22a907971b5bc2d0feb50d7298ae/main%20ui.png
 #add expense
-
+https://github.com/Monster-3-2/Vit-Project/blob/ece8700a28b2c547ae8d8ee87d0bb0ef3b52e670/add%20expense.png
 #add income
 
 #show expenses
